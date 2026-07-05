@@ -1,20 +1,25 @@
 package mobile_automation_sandbox.pages;
 
-import java.util.Map;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 
 public class HomeScreenPage {
 
-    private AppiumDriver driver;
+    private AndroidDriver driver;
 
-    public HomeScreenPage(AppiumDriver driver) {
+    public HomeScreenPage(AndroidDriver driver) {
         this.driver = driver;
     }
 
     public void goToHomeScreen() {
-        driver.executeScript("mobile:pressKey", Map.ofEntries(Map.entry("keycode", 3)));
+        driver.pressKey(new KeyEvent(AndroidKey.HOME));
     }
 
     public void selectPlayStore() {
@@ -41,12 +46,12 @@ public class HomeScreenPage {
         clickAccessibilityId("Chrome");
     }
 
-    public void selectAppiumSettings() {
-        clickAccessibilityId("Appium Settings");
-    }
-
     private void clickAccessibilityId(String accessibilityId) {
-        driver.findElement(AppiumBy.accessibilityId(accessibilityId)).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By app = AppiumBy.accessibilityId(accessibilityId);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(app));
+        driver.findElement(app).click();
     }
 
 }

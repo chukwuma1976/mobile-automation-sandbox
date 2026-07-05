@@ -150,7 +150,7 @@ src
  ├── main
  └── test
       ├── BaseTest.java
-      ├── AppiumTest.java
+      ├── HomeScreenTest.java
       └── ...
 ```
 

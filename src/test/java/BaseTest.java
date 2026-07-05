@@ -2,18 +2,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BaseTest {
     URL url;
-    AppiumDriver driver;
+    protected AndroidDriver driver;
 
-    @BeforeEach
+    @BeforeAll
     void setup() {
 
         try {
@@ -22,9 +23,11 @@ public class BaseTest {
             options.setPlatformName("Android")
                     .setDeviceName("emulator-5554")
                     .setAutomationName("UiAutomator2")
-                    .setNewCommandTimeout(Duration.ofSeconds(60));
+                    .setUiautomator2ServerLaunchTimeout(Duration.ofSeconds(90))
+                    .setAutoGrantPermissions(true)
+                    .setNoReset(true);
 
-            url = new URL("http://127.0.0.1:4723");
+            url = new URL("http://127.0.0.1:4723/");
             driver = new AndroidDriver(url, options);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -33,7 +36,7 @@ public class BaseTest {
 
     }
 
-    @AfterEach
+    @AfterAll
     void tearDown() {
         if (driver != null) {
             driver.quit();
