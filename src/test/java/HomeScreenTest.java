@@ -57,4 +57,10 @@ public class HomeScreenTest extends BaseTest {
         homeScreenPage.selectPlayStore();
     }
 
+    @Test
+    @DisplayName("select google search")
+    void selectGoogleSearch() {
+        homeScreenPage.selectGoogleSearch();
+    }
+
 }
