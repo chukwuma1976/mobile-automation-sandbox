@@ -121,7 +121,8 @@ Launch Appium Inspector using the following capabilities:
 {
   "platformName": "Android",
   "appium:automationName": "UiAutomator2",
-  "appium:deviceName": "emulator-5554"
+  "appium:deviceName": "emulator-5554",
+  "appium:adbExecTimeout": 120000
 }
 ```
 

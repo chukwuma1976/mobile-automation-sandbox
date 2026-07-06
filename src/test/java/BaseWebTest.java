@@ -10,7 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BaseTest {
+public class BaseWebTest {
     URL url;
     AndroidDriver driver;
 
@@ -23,9 +23,13 @@ public class BaseTest {
             options.setPlatformName("Android")
                     .setDeviceName("emulator-5554")
                     .setAutomationName("UiAutomator2")
+                    .withBrowserName("Chrome")
                     .setUiautomator2ServerLaunchTimeout(Duration.ofSeconds(90))
                     .setAutoGrantPermissions(true)
-                    .setNoReset(true);
+                    .setNoReset(true)
+                    .setAdbExecTimeout(Duration.ofSeconds(90));
+            // Tell Appium to automatically download the missing driver
+            options.setCapability("appium:chromedriverAutodownload", true);
 
             url = new URL("http://127.0.0.1:4723/");
             driver = new AndroidDriver(url, options);
